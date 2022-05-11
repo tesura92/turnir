@@ -3,12 +3,23 @@ from tkinter import ttk
 import datetime as dt
 
 
-def player(a):
-    lista=[]
-    lista.append(a)
-    print(lista)
+def player(a,window2):
+    listofplayer.append(a.get())
+    print(listofplayer)
+    t=Label(window2,text=a.get())
+    t.pack()
+    labelista.append(t)
+
+
+def removep(a):
+    for i in labelista:
+        if i['text'] == a.get():
+            listofplayer.pop(listofplayer.index(a.get()))
+            labelista.pop(labelista.index(i))
+            i.destroy()
+
+
 def tournament():
-    listofplayer = []
     window2=Tk()
     window2.title(e_t.get())
     window2.geometry('600x600')
@@ -18,9 +29,14 @@ def tournament():
 
     names = Entry(window2)
     names.pack(pady=10)
-    a=names.get()
-    addnames=Button(window2, text="Add Player", command=player(a))
+
+
+    addnames=Button(window2, text="Add Player", command=lambda: player(names,window2))
     addnames.pack()
+
+    deletenames=Button(window2, text="Delete Player",command=lambda: removep(names))
+    deletenames.pack()
+
 
 
     options = ['SingleElimination',
@@ -37,9 +53,11 @@ def tournament():
     typeoft.pack()
 
 
+
+
     window2.mainloop()
-
-
+labelista=[]
+listofplayer = []
 root = Tk()
 root.title("Turniri")
 root.geometry('300x500')
