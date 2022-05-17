@@ -7,10 +7,22 @@ import math
 
 class Tournament:
 
+<<<<<<< HEAD
     def __init__(self,players,typeoftournament):
         self.player_list = players
         self.__tournament_id__ = None
         self.__tournament__ = typeoftournament
+=======
+    def __init__(self):
+        self.player_list = []
+        self.__tournament_id__ = None
+        self.__tournament__ = None
+
+    def load_players(self):
+        self.player_list = listofplayer
+        if len(self.player_list) == 1:
+            popwinner(self.player_list)
+>>>>>>> origin/main
 
     def set_tournament_id(self,a):
         self.__tournament_id__ = a
@@ -18,8 +30,11 @@ class Tournament:
     def set_tournament(self, a,):
         self.__tournament__ = a
 
+<<<<<<< HEAD
     def tournmanetwindow(self,listofplayer):
 
+=======
+>>>>>>> origin/main
 
 
 
@@ -58,9 +73,12 @@ def turnir(a, window2):
     random.shuffle(listofplayer)
     print(listofplayer)
 
+<<<<<<< HEAD
     t=Tournament(listofplayer,typeoft)
 
 
+=======
+>>>>>>> origin/main
     if typeoft == "SingleElimination":
         window3 = Tk()
         window3.title('SignleElimination')
