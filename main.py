@@ -1,3 +1,4 @@
+import tkinter
 from tkinter import *
 from tkinter import ttk
 import datetime as dt
@@ -7,26 +8,38 @@ import math
 
 class Tournament:
 
-    def __init__(self):
-        self.player_list = []
-        self.__tournament_id__ = None
-        self.__tournament__ = None
+    def __init__(self, players, typeoft):
+        self.player_list = players
+        self.__tournament__ = typeoft
 
-    def load_players(self):
-        self.player_list = listofplayer
+    def window(self):
+        window = Tk()
+        window.geometry('300x600')
+
+        drzac = [2 ** i for i in range(10) if len(self.player_list) <= 2 ** i]
+        while len(self.player_list) < drzac[0]:
+            self.player_list.append('bye')
         if len(self.player_list) == 1:
-            popwinner(self.player_list)
+            return self.player_list
+        print(self.player_list)
+        lista1 = self.player_list[:len(self.player_list) // 2]
+        lista2 = self.player_list[len(self.player_list) // 2:]
+        lista2.reverse()
+        for i in range((len(self.player_list)) // 2):
+            verus = [lista1[i], lista2[i]]
+            tlabel = Label(window, text=f'{lista1[i]} VS {lista2[i]}')
+            tlabel.grid(row=i, column=0, padx=2, pady=2)
+            t = ttk.Combobox(window, values=verus)
+            t.grid(row=i, column=1, padx=2, pady=2)
+        submitresults = Button(window, text='Submit Results', command=choice_sel)
+        submitresults.grid(row=((len(self.player_list)) // 2) + 1, column=0)
 
-    def set_tournament_id(self,a):
-        self.__tournament_id__ = a
-
-    def set_tournament(self, a,):
-        self.__tournament__ = a
+        window.mainloop()
 
 
-
-
-
+def choice_sel(*args, **kwargs):
+    listapobeda = [args[0].widget.get()]
+    print(listapobeda)
 
 
 def popwinner(player_list):
@@ -60,24 +73,8 @@ def turnir(a, window2):
     random.shuffle(listofplayer)
     random.shuffle(listofplayer)
     print(listofplayer)
-
-    if typeoft == "SingleElimination":
-        window3 = Tk()
-        window3.title('SignleElimination')
-        window3.geometry('600x600')
-
-
-    elif typeoft == "DoubleElimination":
-        print('2')
-
-    elif typeoft == "Leaderboard":
-        print('3')
-
-    elif typeoft == "Swiss":
-        print('4')
-
-    elif typeoft == "FreeForAll":
-        print('5')
+    test = Tournament(listofplayer, typeoft)
+    test.window()
 
 
 def player(a, window2):
