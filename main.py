@@ -28,7 +28,7 @@ class SingleElimination(Tournament):
 
     def start(self):
 
-        if len(self.player_list) == 1:
+        if len(self.player_list) == 1 and self.typeoft == 'SingleElimination':
             popwinner(self.player_list)
             return
 
@@ -68,23 +68,22 @@ class DoubleElimination(Tournament):
         Tournament.__init__(self, players, typeoft)
 
     def start(self):
-        if len(self.player_list) == 1:
-            popwinner(self.player_list)
-            return
 
-        """
-        listapoeba = SingleElimination(ucesnici)
-        gubitnici = ucesnici
-        gubitnici.pop(gubitnici.index(listapoeba[0]))
+        gubitnici = self.player_list
+
+        while len(self.player_list) > 1:
+            tournament1 = SingleElimination(self.player_list, self.typeoft)
+            tournament1.start()
+
+        gubitnici.pop(gubitnici.index(self.player_list))
         listagubitnika = SingleElimination(gubitnici)
-        print(f'Unesite broj poena {listapoeba[0]} vs {listagubitnika[0]}')
-        a = int(input(f'Uneti broj poena za {listapoeba[0]} : '))
+        print(f'Unesite broj poena {self.player_list[0]} vs {listagubitnika[0]}')
+        a = int(input(f'Uneti broj poena za {self.player_list[0]} : '))
         b = int(input(f'Uneti broj poena za {listagubitnika[0]} : '))
         if a >= b:
-            return listapoeba[0]
+            return self.player_list[0]
         else:
             return listagubitnika[0]
-        """
 
         window = Tk()
         window.geometry('300x600')
@@ -110,7 +109,6 @@ class Leaderboard(Tournament):
         a = rezultat.index(min(rezultat))
         print(f'Pobednik je {ucesnici[a]}')
         """
-
 
         window = Tk()
         window.geometry('300x600')
@@ -145,9 +143,7 @@ class Swiss(Tournament):
                     return
         """
 
-
-
-    window = Tk()
+        window = Tk()
         window.geometry('300x600')
 
         window.mainloop()
@@ -162,17 +158,18 @@ class FreeForAll(Tournament):
             popwinner(self.player_list)
             return
 
-        """
-        drzac = [0] * len(ucesnici)
-        for i in range(len(ucesnici)):
-            for y in range(i + 1, len(ucesnici)):
-                print(f'Unesite broj poena {ucesnici[i]} vs {ucesnici[y]}')
-                drzac[i] = drzac[i] + int(input(f'{ucesnici[i]} : '))
-                drzac[y] = drzac[y] + int(input(f'{ucesnici[y]} : '))
+        '''
+        drzac = [0] * len(self.player_list)
+        for i in range(len(self.player_list)):
+            for y in range(i + 1, len(self.player_list)):
+                print(f'Unesite broj poena {self.player_list[i]} vs {self.player_list[y]}')
+                drzac[i] = drzac[i] + int(input(f'{self.player_list[i]} : '))
+                drzac[y] = drzac[y] + int(input(f'{self.player_list[y]} : '))
+        
         print(drzac)
         a = drzac.index(max(drzac))
-        print(f'Pobednik je {ucesnici[a]} sa {drzac[a]} bodova')
-        """
+        print(f'Pobednik je {self.player_list[a]} sa {drzac[a]} bodova')
+        '''
 
         window = Tk()
         window.geometry('300x600')
@@ -240,7 +237,7 @@ def turnir(a, window2):
         tournament = SingleElimination(listofplayer, typeoft)
 
     elif typeoft == 'FreeForAll':
-        tournament = SingleElimination(listofplayer, typeoft)
+        tournament = FreeForAll(listofplayer, typeoft)
     if tournament:
         tournament.start()
     else:
