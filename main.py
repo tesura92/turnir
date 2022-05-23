@@ -117,18 +117,15 @@ class DoubleElimination(Tournament):
         :return:
         """
         loserbracket = self.player_list
-        print('stigli123')
         tournament1 = SingleElimination(self.player_list, self.get_typeoft())
         tournament1.start()
         winner = tournament1.player_list[0]
         loserbracket.pop(loserbracket.index(winner))
-        print(loserbracket)
         tournament2 = SingleElimination(loserbracket, self.get_typeoft())
         tournament2.start()
         wloser = tournament2.player_list
         tournament3 = SingleElimination([winner, wloser], self.get_typeoft())
         tournament3.start()
-        print(tournament3.player_list[0])
         if winner == tournament3.player_list[0]:
             window = Tk()
             window.title('Winner!!!')
