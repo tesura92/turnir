@@ -1,10 +1,8 @@
-import sys
-import tkinter
 from tkinter import *
 from tkinter import ttk
 import datetime as dt
 import random
-import math
+import numpy as np
 
 
 class Tournament:
@@ -43,7 +41,6 @@ class SingleElimination(Tournament):
 
         window = Tk()
         window.geometry('500x600')
-
         drzac = [2 ** i for i in range(10) if len(self.player_list) <= 2 ** i]
         while len(self.player_list) < drzac[0]:
             self.player_list.append('bye')
@@ -52,8 +49,8 @@ class SingleElimination(Tournament):
         lista1 = self.player_list[:len(self.player_list) // 2]
         lista2 = self.player_list[len(self.player_list) // 2:]
         lista2.reverse()
-
         boxes = []
+
         for i in range((len(self.player_list)) // 2):
             verus = [lista1[i], lista2[i]]
             tlabel = Label(window, text=f'{lista1[i]} VS {lista2[i]}')
@@ -61,12 +58,12 @@ class SingleElimination(Tournament):
             t = ttk.Combobox(window, values=verus)
             t.grid(row=i, column=1, padx=2, pady=2)
             boxes.append(t)
-            c=Checkbutton(window, text='Started')
+            c = Checkbutton(window, text='Started')
             c.grid(row=i, column=2, padx=2, pady=2)
+
         submitresults = Button(window, text='Submit Results',
                                command=lambda: self.choice_sel(window, submitresults, boxes))
         submitresults.grid(row=((len(self.player_list)) // 2) + 1, column=0)
-
         window.mainloop()
 
     def choice_sel(self, window, submitresults, boxes):
@@ -151,6 +148,8 @@ class Leaderboard(Tournament):
             t = Entry(window)
             t.grid(row=i, column=1, padx=2, pady=2)
             boxes.append(t)
+            c = Checkbutton(window, text='Started')
+            c.grid(row=i, column=2, padx=2, pady=2)
         submitresults = Button(window, text='Submit Results',
                                command=lambda: self.choice_sel(boxes, window, submitresults))
         submitresults.grid(row=len(self.player_list) + 1, column=0)
@@ -184,25 +183,14 @@ class Swiss(Tournament):
         if len(self.player_list) == 1:
             popwinner(self.player_list)
             return
-
-        """
-        a = [2 ** i for i in range(10) if len(ucesnici) <= 2 ** i]
-        while len(ucesnici) < a[0]:
-            ucesnici.append('bye')
-        b = int(math.log(a, 2))
-        drzac = [[] * b] * (b + 1)
-        drzac[0] = ucesnici
-        for i in range(1, b + 1):  # ovde prolazimo kroz runde
-            for y in range(0, len(drzac[0]) + 1, 2):
-                print(f'Unesite broj poena {drzac[i - 1][y]} vs {drzac[i - 1][y + 1]}')
-                a = int(input(f'Uneti broj poena za {drzac[i - 1][y]} : '))
-                b = int(input(f'Uneti broj poena za {drzac[i - 1][y + 1]}: '))
-                if a >= b:
-                    return
-                else:
-                    return
-        """
-
+        if len(self.player_list) % 2 == 1:
+            self.player_list.append('bye')
+        drzac = [2 ** i for i in range(10) if len(self.player_list) <= 2 ** i]
+        print = np.array(len(self.player_list))
+        a = drzac[0] * 3
+        pointcheck = np.zer
+        print(print)
+        print(pointcheck)
         window = Tk()
         window.geometry('300x600')
 
@@ -237,6 +225,8 @@ class FreeForAll(Tournament):
                 t = ttk.Combobox(window, values=verus)
                 t.grid(row=z, column=1, padx=2, pady=2)
                 boxes.append(t)
+                c = Checkbutton(window, text='Started')
+                c.grid(row=z, column=2, padx=2, pady=2)
                 z += 1
         submitresults = Button(window, text='Submit Results',
                                command=lambda: self.choice_sel(boxes, window, submitresults))
@@ -350,7 +340,7 @@ def ntournament():
 
     second_frame = Frame(my_canvas)
 
-    my_canvas.create_window((0,0), window=second_frame, anchor="nw")
+    my_canvas.create_window((0, 0), window=second_frame, anchor="nw")
     vojd2 = Label(second_frame, text="Unesite igrace:", font=20)
     vojd2.pack(pady=10)
 
@@ -370,7 +360,7 @@ def ntournament():
                'FreeForAll'
                ]
     vojd1 = Label(second_frame, text="Izaberite tip turnira:", font=20)
-    vojd1.pack(padx=100 )
+    vojd1.pack(padx=100)
 
     typeoft = ttk.Combobox(second_frame, value=options, font=20)
     typeoft.current(0)
